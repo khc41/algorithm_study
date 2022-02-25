@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
+#include <cstring>
 using namespace std;
 
 bool visit[14];
@@ -10,17 +11,14 @@ int ans[6];
 
 void dfs(int n, int depth) {
 	ans[depth] = num[n];
-	if (depth == 6) {
+	if (depth == 5) {
 		for (int i = 0; i < 6; i++)
 			cout << ans[i] << " ";
 		cout << "\n";
 		return;
 	}
-	visit[n] = true;
 	for (int i = n + 1; i < k; i++) {
-		if (!visit[i]){
-			dfs(i, depth + 1);
-		}
+		dfs(i, depth + 1);
 	}
 	visit[n] = false;
 }
@@ -35,8 +33,8 @@ int main() {
 		}
 		for (int i = 0; i < k - 5; i++){
 			dfs(i, 0);
-			cout << "\n";
 		}
+		cout << "\n";
 		cin >> k;
 	}
 }
