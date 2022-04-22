@@ -31,51 +31,38 @@ void sequrity(point p) {
 	for (int i = 0; i < n; i++)
 		for (int j = 0; j < n; j++)
 			visited[i][j] = false;
-	queue<pair<point, int>> q;
+	queue<point> q;
 	int cnt = 0;
 	if (map[p.y][p.x] == 1) {
 		cnt++;
 	}
-	q.push({ p, 1 });
+	int service = 1;
+	q.push(p);
 	visited[p.y][p.x] = true;
 
 	while (!q.empty()) {
-		point cur = q.front().first;
-		int k = q.front().second;
-		q.pop();
-		for (int i = 0; i < 4; i++) {
-			int nx = cur.x + dir[i][0];
-			int ny = cur.y + dir[i][1];
-			if (nx < 0 || nx >= n || ny < 0 || ny >= n) continue;
-			if (!visited[ny][nx]) {
-				visited[ny][nx] = true;
-				q.push({ point(nx, ny), k + 1 });
-				if (map[ny][nx] == 1) {
-					cnt++;
-				}
-			}
-		}
-		if (!q.empty()) {
-			if (k != q.front().second) {
-				k++;
-				cout << endl;
-				for (int i = 0; i < n; i++) {
-					for (int j = 0; j < n; j++)
-						cout << visited[i][j] << " ";
-					cout << endl;
-				}
-				cout << cnt << " " << k << " " << (k * k + (k - 1) * (k - 1)) << " " << cnt * m << endl;
-				if (cnt * m >= (k * k + (k - 1) * (k - 1))) {
+		if (service > n + 1) break;
+		if (cnt * m >= (service * service + (service - 1) * (service - 1))) answer = max(answer, cnt);
+		int s = q.size();
 
-					if (answer < cnt) {
+		for(int qs = 0; qs < s; qs++){
+			point cur = q.front();
+			q.pop();
 
+			for (int i = 0; i < 4; i++) {
+				int nx = cur.x + dir[i][0];
+				int ny = cur.y + dir[i][1];
+				if (nx < 0 || nx >= n || ny < 0 || ny >= n) continue;
+				if (!visited[ny][nx]) {
+					visited[ny][nx] = true;
+					q.push(point(nx, ny));
+					if (map[ny][nx] == 1) {
+						cnt++;
 					}
-					answer = max(answer, cnt);
 				}
-				k--;
 			}
 		}
-		if (k > n + 1) break;
+		service++;
 	}
 }
 
