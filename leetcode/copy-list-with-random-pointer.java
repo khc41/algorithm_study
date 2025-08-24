@@ -18,7 +18,14 @@ class Solution {
         if (head == null) {
             return null;
         }
-
+        Node newHead = getCopyNodeList(head);
+        Node copyCur = newHead;
+        Node cur = head;
+        while (cur != null) {
+            copyCur.random = getRandomNode(head, newHead, cur.random);
+            cur = cur.next;
+            copyCur = copyCur.next;
+        }
         return newHead;
     }
 
