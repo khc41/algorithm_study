@@ -18,38 +18,23 @@ class Solution {
         if (head == null) {
             return null;
         }
-        Node newHead = getCopyNodeList(head);
-        Node copyCur = newHead;
-        Node cur = head;
-        while (cur != null) {
-            copyCur.random = getRandomNode(head, newHead, cur.random);
-            cur = cur.next;
-            copyCur = copyCur.next;
-        }
-        return newHead;
-    }
-
-    public Node getCopyNodeList(Node head) {
+        Map<Node, Node> oldToNew = new HashMap<>();
         Node newHead = new Node(head.val);
-        if (head.next != null) {
-            newHead.next = getCopyNodeList(head.next);
-        }
-        return newHead;
-    }
+        oldToNew.put(head, newHead);
 
-    public Node getRandomNode(Node head, Node newHead, Node random) {
-        if (random == null) {
-            return null;
-        }
         Node cur = head;
-        Node newCur = newHead;
         while (cur != null) {
-            if (cur == random) {
-                return newCur;
-            }
+            oldToNew.put(cur, new Node(cur.val));
             cur = cur.next;
-            newCur = newCur.next;
         }
-        return null;
+
+        cur = head;
+        while (cur != null) {
+            oldToNew.get(cur).next = oldToNew.get(cur.next);
+            oldToNew.get(cur).random = oldToNew.get(cur.random);
+            cur = cur.next;
+        }
+
+        return oldToNew.get(head);
     }
 }
