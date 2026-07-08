@@ -1,30 +1,34 @@
 class Solution {
     fun reverseWords(s: String): String {
-        val stack = ArrayDeque<String>()
-        val chars = s.trim().toCharArray()
-        val result = StringBuilder()
-        val sb = StringBuilder()
-        for (i in 0 until chars.size) {
-            if (chars[i] == ' ') {
-                if (sb.length == 0) {
-                    continue
-                }
-                stack.addFirst(sb.toString())
-                sb.setLength(0)
-                continue
+        val chars = s.trim().reversed().toCharArray()
+        var rp = 0
+        var wp = 0
+        var i = 0
+
+        while (rp < chars.size) {
+            while (rp < chars.size && chars[rp] == ' ') {
+                rp++
             }
-            if (i == chars.size - 1) {
-                sb.append(chars[i])
-                stack.addFirst(sb.toString())
-                continue
+            if (rp >= chars.size) break
+            if (wp > 0) {
+                chars[wp++] = ' '
             }
-            sb.append(chars[i])
+            var wordStart = wp
+            while (rp < chars.size && chars[rp] != ' ') {
+                chars[wp++] = chars[rp++]
+            }
+
+            var wordEnd = wp - 1
+
+            while (wordStart < wordEnd) {
+                val tmp = chars[wordEnd]
+                chars[wordEnd] = chars[wordStart]
+                chars[wordStart] = tmp
+                wordEnd--
+                wordStart++
+            }
+
         }
-        while (stack.size > 1) {
-            result.append(stack.removeFirst())
-            result.append(" ")
-        }
-        result.append(stack.removeFirst())
-        return result.toString()
+        return String(chars, 0, wp)
     }
 }
