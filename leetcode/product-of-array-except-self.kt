@@ -1,17 +1,15 @@
 class Solution {
     fun productExceptSelf(nums: IntArray): IntArray {
         val len = nums.size
-        val pre = IntArray(len)
-        val sur = IntArray(len)
         val result = IntArray(len)
-        pre[0] = 1
-        sur[len - 1] = 1
+        result[0] = 1
         for (i in 0 until len - 1) {
-            pre[i + 1] = pre[i] * nums[i]
-            sur[len - i - 2] = sur[len - i - 1] * nums[len - i - 1]
+            result[i + 1] = result[i] * nums[i]
         }
-        for (i in 0 until len) {
-            result[i] = pre[i] * sur[i]
+        var last = 1
+        for (i in 0 until len - 1) {
+            last *= nums[len - i - 1]
+            result[len - i - 2] *= last
         }
         return result
     }
