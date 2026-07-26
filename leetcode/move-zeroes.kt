@@ -1,18 +1,16 @@
 class Solution {
     fun moveZeroes(nums: IntArray): Unit {
-        var numOfZero = 0
-        var idx = 0
-        while (idx < nums.size) {
-            if (nums[idx] == 0) {
-                numOfZero++
-                idx++
-                continue
+        var lastNonZeroIdx = 0
+
+        for (i in nums.indices) {
+            if (nums[i] != 0) {
+                if (i != lastNonZeroIdx) {
+                    var temp = nums[lastNonZeroIdx]
+                    nums[lastNonZeroIdx] = nums[i]
+                    nums[i] = temp
+                }
+                lastNonZeroIdx++
             }
-            nums[idx - numOfZero] = nums[idx]
-            if (numOfZero > 0) {
-                nums[idx] = 0
-            }
-            idx++
         }
     }
 }
