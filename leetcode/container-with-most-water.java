@@ -1,16 +1,20 @@
 class Solution {
-    public int maxArea(int[] height) {
-        int result = 0;
-        int min = 0;
-        int max = height.length - 1;
-        while (max > min) {
-            result = Math.max(result, (max - min) * Math.min(height[min], height[max]));
-            if (height[min] > height[max]) {
-                max--;
+    fun maxArea(height: IntArray): Int {
+        var left = 0
+        var right = height.size - 1
+        var maxArea = 0
+
+        while (left < right) {
+            val currentArea = minOf(height[left], height[right]) * (right - left)
+            maxArea = maxOf(maxArea, currentArea)
+
+            if (height[left] < height[right]) {
+                left++
             } else {
-                min++;
+                right--
             }
         }
-        return result;
+
+        return maxArea
     }
 }
