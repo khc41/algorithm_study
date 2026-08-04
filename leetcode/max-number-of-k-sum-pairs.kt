@@ -1,26 +1,21 @@
 class Solution {
     fun maxOperations(nums: IntArray, k: Int): Int {
+        nums.sort()
+        var left = 0
+        var right = nums.size - 1
         var result = 0
-        val hashMap = HashMap<Int, Int>()
-        for (i in nums) {
-            hashMap.compute(i) { _, value -> (value ?: 0) + 1 }
+        while (left < right) {
+            if (nums[left] + nums[right] == k) {
+                result++
+                left++
+                right--
+            } else if (nums[left] + nums[right] > k) {
+                right--
+            } else {
+                left++
+            }
         }
 
-        for ((key, value) in hashMap) {
-            if (key > k) {
-                continue
-            }
-            if ((k - key) == key) {
-                hashMap.put(key, 0)
-                result += value / 2
-                continue
-            }
-            val pair = hashMap.get(k - key) ?: continue
-            val minValue = minOf(pair, value)
-            result += minValue
-            hashMap.put(key, value - minValue)
-            hashMap.put(k - key, pair - minValue)
-        }
         return result
     }
 }
