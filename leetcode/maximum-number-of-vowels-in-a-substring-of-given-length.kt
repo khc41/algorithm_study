@@ -12,8 +12,6 @@ class Solution {
         return maxSum
     }
 
-    fun isVowel(ch: Char): Int {
-        return if (ch == 'a' || ch == 'e' || ch == 'i' || ch == 'o' || ch == 'u') 1
-        else 0
-    }
+    fun isVowel(ch: Char): Int = if (ch in "aeiou") 1 else 0
+
 }
