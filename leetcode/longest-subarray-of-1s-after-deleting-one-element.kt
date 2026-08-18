@@ -4,22 +4,18 @@ class Solution {
         var right = 0
         var k = 0
         var result = 0
-        var containZero = false
 
         while (right < nums.size) {
-            if (nums[right] == 0) {
-                k++
-                containZero = true
-            }
+            if (nums[right] == 0) k++
 
             while (k > 1) {
                 if (nums[left++] == 0) k--
             }
 
-            result = maxOf(result, right - left + 1 - k)
+            result = maxOf(result, right - left)
             right++
         }
 
-        return if (containZero) result else result - 1
+        return result
     }
 }
