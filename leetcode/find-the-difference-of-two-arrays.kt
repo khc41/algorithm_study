@@ -1,21 +1,11 @@
 class Solution {
     fun findDifference(nums1: IntArray, nums2: IntArray): List<List<Int>> {
-        var result = ArrayList<ArrayList<Int>>()
-        var distinct1 = nums1.toSet()
-        var distinct2 = nums2.toSet()
-        getResult(distinct1, distinct2, result)
-        getResult(distinct2, distinct1, result)
+        val set1 = nums1.toSet()
+        val set2 = nums2.toSet()
 
-        return result
-    }
+        val diff1 = (set1 - set2).toList()
+        val diff2 = (set2 - set1).toList()
 
-    fun getResult(nums1: Set<Int>, nums2: Set<Int>, result: ArrayList<ArrayList<Int>>) {
-        var result1 = ArrayList<Int>()
-        for (i in nums1) {
-            if (!nums2.contains(i)) {
-                result1.add(i)
-            }
-        }
-        result.add(result1)
+        return listOf(diff1, diff2)
     }
 }
