@@ -1,13 +1,13 @@
 class Solution {
     fun removeStars(s: String): String {
-        var stack = ArrayDeque<Char>()
+        var sb = StringBuilder()
         for (ch in s) {
             if (ch == '*') {
-                stack.removeFirst()
+                sb.setLength(sb.length - 1)
                 continue
             }
-            stack.addFirst(ch)
+            sb.append(ch)
         }
-        return stack.reversed().joinToString("")
+        return sb.toString()
     }
 }
