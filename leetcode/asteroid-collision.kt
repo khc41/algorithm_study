@@ -3,31 +3,26 @@ class Solution {
         val stack = ArrayDeque<Int>()
 
         for (i in asteroids) {
-            if (i > 0) {
-                stack.addFirst(i)
-                continue
-            }
             var isExplode = false
-            while (!stack.isEmpty()) {
-                val last = stack.removeFirst()
-                if (last < 0) {
-                    stack.addFirst(last)
-                    stack.addFirst(i)
-                    break
-                }
-                if (abs(i) < abs(last)) {
-                    stack.addFirst(last)
-                    break
-                }
-                if (abs(i) == abs(last)) {
+            while (stack.isNotEmpty() && i < 0 && stack.last() > 0) {
+                val last = stack.last()
+
+                if (abs(i) < last) {
                     isExplode = true
                     break
+                } else if (abs(i) == last) {
+                    isExplode = true
+                    stack.removeLast()
+                    break
+                } else {
+                    stack.removeLast()
                 }
             }
-            if (stack.isEmpty() && !isExplode) {
-                stack.addFirst(i)
+
+            if (!isExplode) {
+                stack.addLast(i)
             }
         }
-        return stack.reversed().toIntArray()
+        return stack.toIntArray()
     }
 }
