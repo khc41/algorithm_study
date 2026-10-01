@@ -9,22 +9,33 @@
  */
 class Solution {
     fun pairSum(head: ListNode?): Int {
-        var result = 0
-        var cur = head
+        var slow = head
+        var fast = head
+
+        while (fast?.next != null) {
+            slow = slow?.next
+            fast = fast.next?.next
+        }
+
+        var cur = slow
         var prev: ListNode? = null
-        val stack = ArrayDeque<Int>()
         while (cur != null) {
-            stack.addFirst(cur.`val`)
             val nextTemp = cur.next
             cur.next = prev
             prev = cur
             cur = nextTemp
         }
 
-        while (!stack.isEmpty()) {
-            result = maxOf(stack.removeLast() + prev!!.`val`, result)
-            prev = prev.next
+        var result = 0
+        var left = head
+        var right = prev
+
+        while (right != null) {
+            result = maxOf(left!!.`val` + right.`val`, result)
+            left = left.next
+            right = right.next
         }
+
         return result
     }
 }
