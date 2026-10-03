@@ -16,10 +16,10 @@ class Solution {
         queue.addLast(root)
         while (queue.isNotEmpty()) {
             val currSize = queue.size
-            for (i in 0 until currSize) {
+            repeat(currSize) {
                 val curr = queue.removeFirst()
-                if (curr.left != null) queue.addLast(curr.left)
-                if (curr.right != null) queue.addLast(curr.right)
+                curr.left?.let { queue.addLast(curr.left) }
+                curr.right?.let { queue.addLast(curr.right) }
             }
             depth++
         }
