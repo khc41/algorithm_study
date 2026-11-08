@@ -10,22 +10,22 @@
  */
 class Solution {
     fun rightSideView(root: TreeNode?): List<Int> {
-        val result = arrayListOf<Int>()
-        if (root == null) {
-            return result
-        }
+        if (root == null) return emptyList()
+
+        val result = mutableListOf<Int>()
         val q = ArrayDeque<Pair<TreeNode, Int>>()
-        var depth = 1
+
+        q.addFirst(root to 1)
         var saveDepth = 0
-        q.addFirst(root!! to depth)
         while (q.isNotEmpty()) {
-            val curr = q.removeLast()
-            if (saveDepth < curr.second) {
-                result.add(curr.first.`val`)
+            val (node, depth) = q.removeLast()
+
+            if (saveDepth < depth) {
+                result.add(node.`val`)
                 saveDepth++
             }
-            curr.first.right?.let { q.addFirst(curr.first.right to curr.second + 1) }
-            curr.first.left?.let { q.addFirst(curr.first.left to curr.second + 1) }
+            node.right?.let { q.addFirst(it to depth + 1) }
+            node.left?.let { q.addFirst(it to depth + 1) }
         }
         return result
     }
