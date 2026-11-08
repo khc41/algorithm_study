@@ -16,13 +16,11 @@ class Solution {
         val q = ArrayDeque<Pair<TreeNode, Int>>()
 
         q.addFirst(root to 1)
-        var saveDepth = 0
         while (q.isNotEmpty()) {
             val (node, depth) = q.removeLast()
 
-            if (saveDepth < depth) {
+            if (result.size < depth) {
                 result.add(node.`val`)
-                saveDepth++
             }
             node.right?.let { q.addFirst(it to depth + 1) }
             node.left?.let { q.addFirst(it to depth + 1) }
